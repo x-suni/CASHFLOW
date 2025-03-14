@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - PesaFlow Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d47a1;
+            --secondary: #4caf50;
+            --light: #f5f5f5;
+            --dark: #333;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --success: #4caf50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #e0e0e0;
+        }
+        
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://via.placeholder.com/1200x400') center/cover no-repeat;
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        section {
+            padding: 5rem 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Blog Layout */
+        .blog-layout {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+        
+        /* Blog Posts */
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .blog-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .blog-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .blog-card:hover .blog-image img {
+            transform: scale(1.05);
+        }
+        
+        .blog-content {
+            padding: 1.5rem;
+        }
+        
+        .blog-category {
+            display: inline-block;
+            background-color: #f0f7ff;
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 1.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .blog-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 0.5rem;
+        }
+        
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Featured Post */
+        .featured-post {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .featured-image {
+            height: 100%;
+            min-height: 300px;
+        }
+        
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .featured-content {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .featured-label {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .featured-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .featured-excerpt {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .featured-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Sidebar */
+        .blog-sidebar {
+            position: sticky;
+            top: 100px;
+        }
+        
+        .sidebar-widget {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .widget-title {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .widget-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .search-form {
+            display: flex;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 0.9rem;
+        }
+        
+        .search-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 1rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        .category-list {
+            list-style: none;
+        }
+        
+        .category-list li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .category-list a {
+            color: #555;
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            transition: color 0.3s;
+        }
+        
+        .category-list a:hover {
+            color: var(--primary);
+        }
+        
+        .category-count {
+            background-color: #f0f7ff;
+            color: var(--primary);
+            padding: 0.1rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+        
+        .popular-posts {
+            list-style: none;
+        }
+        
+        .popular-post {
+            display: flex;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .popular-post:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .popular-post-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .popular-post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .popular-post-content h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .popular-post-content a {
+            color: var(--dark);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .popular-post-content a:hover {
+            color: var(--primary);
+        }
+        
+        .popular-post-date {
+            font-size: 0.8rem;
+            color: #777;
+        }
+        
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tag {
+            background-color: #f0f7ff;
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .tag:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+        
+        .pagination-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            margin: 0 0.3rem;
+            background-color: white;
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .pagination-item:hover, .pagination-item.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Newsletter */
+        .newsletter-section {
+            background-color: #f0f7ff;
+            text-align: center;
+        }
+        
+        .newsletter-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .newsletter-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 2rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        footer {
+            background-color: #1c2331;
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #3a3a3a;
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Enhanced Mobile Responsiveness */
+        @media (max-width: 992px) {
+            .blog-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-post {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-image {
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background-color: var(--primary);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem 2rem;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                border-radius: 4px;
+                margin-bottom: 1rem;
+            }
+            
+            .newsletter-btn {
+                border-radius: 4px;
+                padding: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            section {
+                padding: 3rem 1.5rem;
+            }
+            
+            .blog-posts {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-wallet"></i>
+                <span>PesaFlow</span>
+            </div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="careers.html">Careers</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html" class="btn btn-secondary">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <h1>PesaFlow Blog</h1>
+        <p>Insights, tips, and trends in expense management and financial technology</p>
+    </div>
+
+    <section>
+        <div class="container">
+            <div class="blog-layout">
+                <div>
+                    <div class="featured-post">
+                        <div class="featured-image">
+                            <img src="https://via.placeholder.com/600x400" alt="Featured Blog Post">
+                        </div>
+                        <div class="featured-content">
+                            <span class="featured-label">Featured</span>
+                            <h2 class="featured-title">The Future of Expense Management: AI and Automation</h2>
+                            <p class="featured-excerpt">Discover how artificial intelligence and automation are revolutionizing expense management processes, reducing manual work, and providing deeper insights into company spending patterns.</p>
+                            <div class="featured-meta">
+                                <div class="blog-author">
+                                    <div class="author-avatar">
+                                        <img src="https://via.placeholder.com/30x30" alt="Author Avatar">
+                                    </div>
+                                    <span>Sarah Johnson</span>
+                                </div>
+                                <span>June 15, 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="blog-posts">
+                        <div class="blog-card">
+                            <div class="blog-image">
+                                <img src="https://via.placeholder.com/400x300" alt="Blog Post">
+                            </div>
+                            <div class="blog-content">
+                                <span class="blog-category">Tips & Tricks</span>
+                                <h3 class="blog-title">5 Ways to Streamline Your Expense Approval Process</h3>
+                                <p class="blog-excerpt">Learn practical strategies to optimize your expense approval workflow, reduce bottlenecks, and improve efficiency across your organization.</p>
+                                <div class="blog-meta">
+                                    <div class="blog-author">
+                                        <div class="author-avatar">
+                                            <img src="https://via.placeholder.com/30x30" alt="Author Avatar">
+                                        </div>
+                                        <span>John Doe</span>
+                                    </div>
+                                    <span>May 28, 2023</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="blog-card">
+                            <div class="blog-image">
+                                <img src="https://via.placeholder.com/400x300" alt="Blog Post">
+                            </div>
+                            <div class="blog-content">
+                                <span class="blog-category">Industry Insights</span>
+                                <h3 class="blog-title">How Digital Transformation is Changing Finance Departments</h3>
+                                <p class="blog-excerpt">Explore the impact of digital technologies on finance teams and how modern tools are enabling more strategic financial management.</p>
+                                <div class="blog-meta">
+                                    <div class="blog-author">
+                                        <div class="author-avatar">
+                                            <img src="https://via.placeholder.com/30x30" alt="Author Avatar">
+                                        </div>
+                                        <span>Michael Brown</span>
+                                    </div>
+                                    <span>May 15, 2023</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="blog-card">
+                            <div class="blog-image">
+                                <img src="https://via.placeholder.com/400x300" alt="Blog Post">
+                            </div>
+                            <div class="blog-content">
+                                <span class="blog-category">Case Study</span>
+                                <h3 class="blog-title">How TechCorp Reduced Expense Processing Time by 75%</h3>
+                                <p class="blog-excerpt">A detailed look at how a leading technology company transformed their expense management process using PesaFlow's platform.</p>
+                                <div class="blog-meta">
+                                    <div class="blog-author">
+                                        <div class="author-avatar">
+                                            <img src="https://via.placeholder.com/30x30" alt="Author Avatar">
+                                        </div>
+                                        <span>Emily Wilson</span>
+                                    </div>
+                                    <span>April 30, 2023</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="blog-card">
+                            <div class="blog-image">
+                                <img src="https://via.placeholder.com/400x300" alt="Blog Post">
+                            </div>
+                            <div class="blog-content">
+                                <span class="blog-category">Compliance</span>
+                                <h3 class="blog-title">Navigating Tax Compliance in Expense Management</h3>
+                                <p class="blog-excerpt">Understanding the tax implications of business expenses and how to ensure compliance with changing regulations across different jurisdictions.</p>
+                                <div class="blog-meta">
+                                    <div class="blog-author">
+                                        <div class="author-avatar">
+                                            <img src="https://via.placeholder.com/30x30" alt="Author Avatar">
+                                        </div>
+                                        <span>Robert Chen</span>
+                                    </div>
+                                    <span>April 18, 2023</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="blog-card">
+                            <div class="blog-image">
+                                <img src="https://via.placeholder.com/400x300" alt="Blog Post">
+                            </div>
+                            <div class="blog-content">
+                                <span class="blog-category">Product Updates</span>
+                                <h3 class="blog-title">Introducing PesaFlow's New Mobile Receipt Scanning Feature</h3>
+                                <p class="blog-excerpt">Learn about our latest mobile app update that makes capturing and processing receipts faster and more accurate than ever before.</p>
+                                <div class="blog-meta">
+                                    <div class="blog-author">
+                                        <div class="author-avatar">
+                                            <img src="https://via.placeholder.com/30x30" alt="Author Avatar">
+                                        </div>
+                                        <span>Lisa Thompson</span>
+                                    </div>
+                                    <span>April 5, 2023</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="blog-card">
+                            <div class="blog-image">
+                                <img src="https://via.placeholder.com/400x300" alt="Blog Post">
+                            </div>
+                            <div class="blog-content">
+                                <span class="blog-category">Best Practices</span>
+                                <h3 class="blog-title">Creating an Effective Expense Policy for Your Business</h3>
+                                <p class="blog-excerpt">A comprehensive guide to developing clear, fair, and enforceable expense policies that work for both employees and finance teams.</p>
+                                <div class="blog-meta">
+                                    <div class="blog-author">
+                                        <div class="author-avatar">
+                                            <img src="https://via.placeholder.com/30x30" alt="Author Avatar">
+                                        </div>
+                                        <span>David Williams</span>
+                                    </div>
+                                    <span>March 22, 2023</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="pagination">
+                        <a href="#" class="pagination-item"><i class="fas fa-chevron-left"></i></a>
+                        <a href="#" class="pagination-item active">1</a>
+                        <a href="#" class="pagination-item">2</a>
+                        <a href="#" class="pagination-item">3</a>
+                        <a href="#" class="pagination-item">4</a>
+                        <a href="#" class="pagination-item"><i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="blog-sidebar">
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">Search</h3>
+                        <form class="search-form">
+                            <input type="text" class="search-input" placeholder="Search articles...">
+                            <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+                        </form>
+                    </div>
+                    
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">Categories</h3>
+                        <ul class="category-list">
+                            <li><a href="#">Tips & Tricks <span class="category-count">12</span></a></li>
+                            <li><a href="#">Industry Insights <span class="category-count">8</span></a></li>
+                            <li><a href="#">Case Studies <span class="category-count">5</span></a></li>
+                            <li><a href="#">Compliance <span class="category-count">7</span></a></li>
+                            <li><a href="#">Product Updates <span class="category-count">10</span></a></li>
+                            <li><a href="#">Best Practices <span class="category-count">15</span></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">Popular Posts</h3>
+                        <ul class="popular-posts">
+                            <li class="popular-post">
+                                <div class="popular-post-image">
+                                    <img src="https://via.placeholder.com/70x70" alt="Popular Post">
+                                </div>
+                                <div class="popular-post-content">
+                                    <h4><a href="#">The Future of Expense Management: AI and Automation</a></h4>
+                                    <span class="popular-post-date">June 15, 2023</span>
+                                </div>
+                            </li>
+                            <li class="popular-post">
+                                <div class="popular-post-image">
+                                    <img src="https://via.placeholder.com/70x70" alt="Popular Post">
+                                </div>
+                                <div class="popular-post-content">
+                                    <h4><a href="#">5 Ways to Streamline Your Expense Approval Process</a></h4>
+                                    <span class="popular-post-date">May 28, 2023</span>
+                                </div>
+                            </li>
+                            <li class="popular-post">
+                                <div class="popular-post-image">
+                                    <img src="https://via.placeholder.com/70x70" alt="Popular Post">
+                                </div>
+                                <div class="popular-post-content">
+                                    <h4><a href="#">How Digital Transformation is Changing Finance Departments</a></h4>
+                                    <span class="popular-post-date">May 15, 2023</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">Tags</h3>
+                        <div class="tag-cloud">
+                            <a href="#" class="tag">Expense Management</a>
+                            <a href="#" class="tag">Finance</a>
+                            <a href="#" class="tag">Automation</a>
+                            <a href="#" class="tag">AI</a>
+                            <a href="#" class="tag">Compliance</a>
+                            <a href="#" class="tag">Mobile</a>
+                            <a href="#" class="tag">Reporting</a>
+                            <a href="#" class="tag">Policy</a>
+                            <a href="#" class="tag">Receipts</a>
+                            <a href="#" class="tag">Integration</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Stay updated with the latest insights, tips, and trends in expense management</p>
+            </div>
+            
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>PesaFlow</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Roadmap</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">API</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 PesaFlow Management System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+        
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+        
+        document.querySelectorAll('.blog-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.querySelector('.blog-image img').style.transform = 'scale(1.05)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.querySelector('.blog-image img').style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - PesaFlow Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Same CSS as template -->
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Same sidebar as template -->
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Same topbar as template -->
+            
+            <!-- Page Content -->
+            <main class="page-content">
+                <div class="page-title">
+                    <h1>Settings</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="dashboard.html">Home</a></li>
+                        <li>Settings</li>
+                    </ul>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 250px 1fr; gap: 20px;">
+                    <!-- Settings Navigation -->
+                    <div style="background-color: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);">
+                        <h3 style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee;">Settings</h3>
+                        <ul style="list-style: none;">
+                            <li style="margin-bottom: 10px;">
+                                <a href="#general" style="display: flex; align-items: center; padding: 8px 10px; border-radius: 4px; background-color: var(--primary); color: white; text-decoration: none;">
+                                    <i class="fas fa-cog" style="width: 20px; margin-right: 10px;"></i>
+                                    <span>General</span>
+                                </a>
+                            </li>
+                            <li style="margin-bottom: 10px;">
+                                <a href="#company" style="display: flex; align-items: center; padding: 8px 10px; border-radius: 4px; color: #555; text-decoration: none;">
+                                    <i class="fas fa-building" style="width: 20px; margin-right: 10px;"></i>
+                                    <span>Company Profile</span>
+                                </a>
+                            </li>
+                            <li style="margin-bottom: 10px;">
+                                <a href="#approval" style="display: flex; align-items: center; padding: 8px 10px; border-radius: 4px; color: #555; text-decoration: none;">
+                                    <i class="fas fa-check-circle" style="width: 20px; margin-right: 10px;"></i>
+                                    <span>Approval Workflow</span>
+                                </a>
+                            </li>
+                            <li style="margin-bottom: 10px;">
+                                <a href="#notifications" style="display: flex; align-items: center; padding: 8px 10px; border-radius: 4px; color: #555; text-decoration: none;">
+                                    <i class="fas fa-bell" style="width: 20px; margin-right: 10px;"></i>
+                                    <span>Notifications</span>
+                                </a>
+                            </li>
+                            <li style="margin-bottom: 10px;">
+                                <a href="#security" style="display: flex; align-items: center; padding: 8px 10px; border-radius: 4px; color: #555; text-decoration: none;">
+                                    <i class="fas fa-shield-alt" style="width: 20px; margin-right: 10px;"></i>
+                                    <span>Security</span>
+                                </a>
+                            </li>
+                            <li style="margin-bottom: 10px;">
+                                <a href="#integrations" style="display: flex; align-items: center; padding: 8px 10px; border-radius: 4px; color: #555; text-decoration: none;">
+                                    <i class="fas fa-plug" style="width: 20px; margin-right: 10px;"></i>
+                                    <span>Integrations</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Settings Content -->
+                    <div>
+                        <!-- General Settings -->
+                        <div id="general" class="content-card">
+                            <h2>General Settings</h2>
+                            <p>Configure general system settings.</p>
+                            
+                            <form style="margin-top: 20px;">
+                                <div style="margin-bottom: 15px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">System Name</label>
+                                    <input type="text" value="PesaFlow Management System" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                </div>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Default Currency</label>
+                                    <select style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                        <option selected>USD - US Dollar</option>
+                                        <option>EUR - Euro</option>
+                                        <option>GBP - British Pound</option>
+                                        <option>JPY - Japanese Yen</option>
+                                        <option>CAD - Canadian Dollar</option>
+                                    </select>
+                                </div>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Date Format</label>
+                                    <select style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                        <option selected>MM/DD/YYYY</option>
+                                        <option>DD/MM/YYYY</option>
+                                        <option>YYYY-MM-DD</option>
+                                    </select>
+                                </div>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Time Zone</label>
+                                    <select style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                        <option selected>(GMT-05:00) Eastern Time (US & Canada)</option>
+                                        <option>(GMT-08:00) Pacific Time (US & Canada)</option>
+                                        <option>(GMT+00:00) UTC</option>
+                                        <option>(GMT+01:00) Central European Time</option>
+                                        <option>(GMT+08:00) China Standard Time</option>
+                                    </select>
+                                </div>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Fiscal Year Start</label>
+                                    <select style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                        <option>January</option>
+                                        <option selected>July</option>
+                                        <option>October</option>
+                                    </select>
+                                </div>
+                                
+                                <button type="submit" style="background-color: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sidebar on mobile
+        document.querySelector('.toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('active');
+            document.querySelector('.main-content').classList.toggle('sidebar-active');
+        });
+        
+        // Set active menu item
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop();
+            const menuItems = document.querySelectorAll('.menu-item');
+            
+            menuItems.forEach(item => {
+                if (item.getAttribute('href') === currentPage) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Settings navigation
+            const settingsLinks = document.querySelectorAll('a[href^="#"]');
+            settingsLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    settingsLinks.forEach(l => {
+                        l.style.backgroundColor = '';
+                        l.style.color = '#555';
+                    });
+                    this.style.backgroundColor = 'var(--primary)';
+                    this.style.color = 'white';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

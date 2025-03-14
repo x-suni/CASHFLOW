@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers - PesaFlow Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link rel="stylesheet" href="index.css">
+    #<style>
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d47a1;
+            --secondary: #4caf50;
+            --light: #f5f5f5;
+            --dark: #333;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --success: #4caf50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #e0e0e0;
+        }
+        
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://via.placeholder.com/1200x400') center/cover no-repeat;
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        section {
+            padding: 5rem 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .careers-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+        
+        .careers-intro p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .benefits-section {
+            background-color: #f0f7ff;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .benefit-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .benefit-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .benefit-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .job-listings {
+            margin-top: 3rem;
+        }
+        
+        .job-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            background-color: #f0f0f0;
+            color: #555;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .job-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .job-title h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .job-meta {
+            display: flex;
+            gap: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .job-meta div {
+            display: flex;
+            align-items: center;
+        }
+        
+        .job-meta i {
+            margin-right: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .job-type {
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .full-time {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+        
+        .part-time {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--warning);
+        }
+        
+        .remote {
+            background-color: rgba(26, 115, 232, 0.1);
+            color: var(--primary);
+        }
+        
+        .job-description {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .job-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .job-tag {
+            background-color: #f0f7ff;
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .job-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .job-footer .btn {
+            padding: 0.5rem 1.5rem;
+        }
+        
+        .job-date {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .culture-section {
+            text-align: center;
+        }
+        
+        .culture-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        
+        .culture-image {
+            border-radius: 8px;
+            overflow: hidden;
+            height: 250px;
+        }
+        
+        .culture-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .culture-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .testimonial-section {
+            background-color: #f0f7ff;
+            text-align: center;
+        }
+        
+        .testimonial-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            padding: 3rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-content {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #555;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .testimonial-content::before, .testimonial-content::after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--primary);
+            opacity: 0.2;
+            position: absolute;
+        }
+        
+        .testimonial-content::before {
+            top: -20px;
+            left: -20px;
+        }
+        
+        .testimonial-content::after {
+            bottom: -40px;
+            right: -20px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 1rem;
+        }
+        
+        .testimonial-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .testimonial-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+            color: var(--dark);
+        }
+        
+        .testimonial-info p {
+            color: #777;
+        }
+        
+        .cta-section {
+            text-align: center;
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        footer {
+            background-color: #1c2331;
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #3a3a3a;
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Enhanced Mobile Responsiveness */
+        @media (max-width: 992px) {
+            .benefit-card {
+                flex-direction: column;
+            }
+            
+            .benefit-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .job-header {
+                flex-direction: column;
+            }
+            
+            .job-type {
+                margin-top: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background-color: var(--primary);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem 2rem;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .job-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .job-footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .job-date {
+                order: -1;
+            }
+            
+            .testimonial-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            section {
+                padding: 3rem 1.5rem;
+            }
+            
+            .testimonial-content {
+                font-size: 1rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-wallet"></i>
+                <span>PesaFlow</span>
+            </div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="careers.html">Careers</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html" class="btn btn-secondary">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <h1>Join Our Team</h1>
+        <p>Discover exciting career opportunities at PesaFlow and be part of our mission to transform expense management</p>
+    </div>
+
+    <section>
+        <div class="container">
+            <div class="careers-intro">
+                <h2>Why Work With Us?</h2>
+                <p>At PesaFlow, we're building the future of expense management, and we're looking for talented individuals who share our passion for innovation and excellence. We believe in creating an environment where creativity thrives, collaboration is encouraged, and personal growth is prioritized.</p>
+                <p>Our team consists of diverse professionals from various backgrounds, all united by a common goal: to simplify financial processes for businesses worldwide. If you're ready to make an impact and grow your career in a supportive and dynamic environment, we'd love to hear from you.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Benefits & Perks</h2>
+                <p>We take care of our team so they can focus on what matters most</p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Health & Wellness</h3>
+                        <p>Comprehensive health insurance, wellness programs, and gym membership subsidies to keep you at your best.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-laptop-house"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Flexible Work</h3>
+                        <p>Hybrid work options, flexible hours, and remote work opportunities to maintain a healthy work-life balance.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Learning & Development</h3>
+                        <p>Professional development budget, learning resources, and regular workshops to help you grow.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-umbrella-beach"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Generous Time Off</h3>
+                        <p>Competitive vacation policy, paid holidays, and personal days to recharge and rejuvenate.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Financial Benefits</h3>
+                        <p>Competitive salary, performance bonuses, and retirement plans to secure your financial future.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Team Building</h3>
+                        <p>Regular team events, celebrations, and activities to foster a strong and connected community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Open Positions</h2>
+                <p>Find your perfect role and take the next step in your career</p>
+            </div>
+            
+            <div class="job-filters">
+                <button class="filter-btn active">All Departments</button>
+                <button class="filter-btn">Engineering</button>
+                <button class="filter-btn">Product</button>
+                <button class="filter-btn">Marketing</button>
+                <button class="filter-btn">Sales</button>
+                <button class="filter-btn">Customer Success</button>
+            </div>
+            
+            <div class="job-listings">
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-title">
+                            <h3>Senior Full Stack Developer</h3>
+                            <div class="job-meta">
+                                <div><i class="fas fa-map-marker-alt"></i> Remote</div>
+                                <div><i class="fas fa-building"></i> Engineering</div>
+                                <div><i class="fas fa-money-bill-wave"></i> Competitive</div>
+                            </div>
+                        </div>
+                        <span class="job-type full-time">Full-time</span>
+                    </div>
+                    
+                    <div class="job-description">
+                        <p>We're looking for an experienced Full Stack Developer to join our engineering team. You'll be responsible for developing and maintaining our core product features, collaborating with cross-functional teams, and contributing to our technical architecture.</p>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="job-tag">JavaScript</span>
+                        <span class="job-tag">React</span>
+                        <span class="job-tag">Node.js</span>
+                        <span class="job-tag">MongoDB</span>
+                        <span class="job-tag">AWS</span>
+                    </div>
+                    
+                    <div class="job-footer">
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                        <span class="job-date">Posted 2 days ago</span>
+                    </div>
+                </div>
+                
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-title">
+                            <h3>Product Manager</h3>
+                            <div class="job-meta">
+                                <div><i class="fas fa-map-marker-alt"></i> New York, NY</div>
+                                <div><i class="fas fa-building"></i> Product</div>
+                                <div><i class="fas fa-money-bill-wave"></i> Competitive</div>
+                            </div>
+                        </div>
+                        <span class="job-type full-time">Full-time</span>
+                    </div>
+                    
+                    <div class="job-description">
+                        <p>We're seeking a talented Product Manager to drive the strategy and execution of our expense management solutions. You'll work closely with engineering, design, and customer success teams to deliver features that delight our users.</p>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="job-tag">Product Strategy</span>
+                        <span class="job-tag">User Research</span>
+                        <span class="job-tag">Agile</span>
+                        <span class="job-tag">Roadmapping</span>
+                    </div>
+                    
+                    <div class="job-footer">
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                        <span class="job-date">Posted 1 week ago</span>
+                    </div>
+                </div>
+                
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-title">
+                            <h3>Digital Marketing Specialist</h3>
+                            <div class="job-meta">
+                                <div><i class="fas fa-map-marker-alt"></i> Remote</div>
+                                <div><i class="fas fa-building"></i> Marketing</div>
+                                <div><i class="fas fa-money-bill-wave"></i> Competitive</div>
+                            </div>
+                        </div>
+                        <span class="job-type part-time">Part-time</span>
+                    </div>
+                    
+                    <div class="job-description">
+                        <p>Join our marketing team to help drive growth through digital channels. You'll be responsible for creating and executing campaigns, analyzing performance metrics, and optimizing our online presence to attract new customers.</p>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="job-tag">SEO</span>
+                        <span class="job-tag">SEM</span>
+                        <span class="job-tag">Content Marketing</span>
+                        <span class="job-tag">Analytics</span>
+                    </div>
+                    
+                    <div class="job-footer">
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                        <span class="job-date">Posted 3 days ago</span>
+                    </div>
+                </div>
+                
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-title">
+                            <h3>Customer Success Manager</h3>
+                            <div class="job-meta">
+                                <div><i class="fas fa-map-marker-alt"></i> San Francisco, CA</div>
+                                <div><i class="fas fa-building"></i> Customer Success</div>
+                                <div><i class="fas fa-money-bill-wave"></i> Competitive</div>
+                            </div>
+                        </div>
+                        <span class="job-type full-time">Full-time</span>
+                    </div>
+                    
+                    <div class="job-description">
+                        <p>We're looking for a Customer Success Manager to ensure our clients get maximum value from our platform. You'll build relationships with key accounts, provide strategic guidance, and drive customer satisfaction and retention.</p>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="job-tag">Account Management</span>
+                        <span class="job-tag">Client Relations</span>
+                        <span class="job-tag">SaaS</span>
+                        <span class="job-tag">Onboarding</span>
+                    </div>
+                    
+                    <div class="job-footer">
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                        <span class="job-date">Posted 5 days ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="culture-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Life at PesaFlow</h2>
+                <p>Get a glimpse of our vibrant culture and work environment</p>
+            </div>
+            
+            <div class="culture-images">
+                <div class="culture-image">
+                    <img src="https://via.placeholder.com/400x300" alt="Team collaboration">
+                </div>
+                <div class="culture-image">
+                    <img src="https://via.placeholder.com/400x300" alt="Office space">
+                </div>
+                <div class="culture-image">
+                    <img src="https://via.placeholder.com/400x300" alt="Team event">
+                </div>
+                <div class="culture-image">
+                    <img src="https://via.placeholder.com/400x300" alt="Work session">
+                </div>
+                <div class="culture-image">
+                    <img src="https://via.placeholder.com/400x300" alt="Team lunch">
+                </div>
+                <div class="culture-image">
+                    <img src="https://via.placeholder.com/400x300" alt="Company retreat">
+                </div>
+            </div>
+            
+            <p>At PesaFlow, we believe that a positive work culture is essential for innovation and success. We foster an environment of collaboration, respect, and continuous learning where every team member can thrive professionally and personally.</p>
+        </div>
+    </section>
+
+    <section class="testimonial-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our Team Says</h2>
+                <p>Hear directly from our employees about their experience working at PesaFlow</p>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>Joining PesaFlow was one of the best career decisions I've made. The collaborative culture, challenging projects, and opportunities for growth have helped me develop both professionally and personally. What I appreciate most is how everyone's ideas are valued, regardless of their position or tenure.</p>
+                </div>
+                
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">
+                        <img src="https://via.placeholder.com/60x60" alt="Employee Avatar">
+                    </div>
+                    <div class="testimonial-info">
+                        <h4>Alex Johnson</h4>
+                        <p>Software Engineer, 2 years at PesaFlow</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Join Our Team?</h2>
+            <p>Explore our open positions and take the first step towards an exciting career at PesaFlow</p>
+            <a href="#" class="btn btn-secondary">View All Positions</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>PesaFlow</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Roadmap</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">API</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 PesaFlow Management System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+        
+        // Job filter functionality
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Here you would typically filter the job listings
+                // This is a placeholder for actual filtering functionality
+                console.log('Filter selected:', this.textContent);
+            });
+        });
+    </script>
+</body>
+</html>

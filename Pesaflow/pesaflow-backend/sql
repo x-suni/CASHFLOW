@@ -1,0 +1,292 @@
+-- Create the PesaFlow database
+CREATE DATABASE pesaflow_db;
+
+-- Use the PesaFlow database
+USE pesaflow_db;
+
+-- Create Users table
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'manager', 'employee', 'finance') NOT NULL,
+    department_id INT,
+    profile_image VARCHAR(255),
+    phone_number VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    last_login TIMESTAMP NULL,
+    is_active BOOLEAN DEFAULT TRUE
+);
+
+-- Create Departments table
+CREATE TABLE departments (
+    department_id INT AUTO_INCREMENT PRIMARY KEY,
+    department_name VARCHAR(100) NOT NULL,
+    manager_id INT,
+    budget_limit DECIMAL(15, 2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Add foreign key to Users table
+ALTER TABLE users
+ADD CONSTRAINT fk_user_department
+FOREIGN KEY (department_id) REFERENCES departments(department_id);
+
+-- Add foreign key to Departments table
+ALTER TABLE departments
+ADD CONSTRAINT fk_department_manager
+FOREIGN KEY (manager_id) REFERENCES users(user_id);
+
+-- Create Categories table for expense categorization
+CREATE TABLE categories (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(100) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Create Expenses table
+CREATE TABLE expenses (
+    expense_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    category_id INT NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL,
+    description TEXT,
+    expense_date DATE NOT NULL,
+    receipt_image VARCHAR(255),
+    status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    approved_by INT,
+    approval_date TIMESTAMP NULL,
+    rejection_reason TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (category_id) REFERENCES categories(category_id),
+    FOREIGN KEY (approved_by) REFERENCES users(user_id)
+);
+
+-- Create Budgets table
+CREATE TABLE budgets (
+    budget_id INT AUTO_INCREMENT PRIMARY KEY,
+    department_id INT NOT NULL,
+    fiscal_year YEAR NOT NULL,
+    fiscal_month INT NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (department_id) REFERENCES departments(department_id),
+    UNIQUE KEY unique_dept_period (department_id, fiscal_year, fiscal_month)
+);
+
+-- Create Reports table
+CREATE TABLE reports (
+    report_id INT AUTO_INCREMENT PRIMARY KEY,
+    report_name VARCHAR(100) NOT NULL,
+    report_type ENUM('expense', 'budget', 'department', 'user') NOT NULL,
+    user_id INT NOT NULL,
+    parameters JSON,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- Create Notifications table
+CREATE TABLE notifications (
+    notification_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    message TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    related_entity VARCHAR(50),
+    related_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- Create User Sessions table
+CREATE TABLE user_sessions (
+    session_id VARCHAR(255) PRIMARY KEY,
+    user_id INT NOT NULL,
+    ip_address VARCHAR(45),
+    user_agent TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- Create Dashboard Widgets table
+CREATE TABLE dashboard_widgets (
+    widget_id INT AUTO_INCREMENT PRIMARY KEY,
+    widget_name VARCHAR(100) NOT NULL,
+    widget_type ENUM('chart', 'statistic', 'list', 'calendar') NOT NULL,
+    description TEXT,
+    is_default BOOLEAN DEFAULT FALSE
+);
+
+-- Create User Dashboard Settings table
+CREATE TABLE user_dashboard_settings (
+    setting_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    widget_id INT NOT NULL,
+    position INT NOT NULL,
+    is_visible BOOLEAN DEFAULT TRUE,
+    widget_settings JSON,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (widget_id) REFERENCES dashboard_widgets(widget_id),
+    UNIQUE KEY unique_user_widget (user_id, widget_id)
+);
+
+-- Create Audit Log table
+CREATE TABLE audit_log (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    action VARCHAR(100) NOT NULL,
+    entity_type VARCHAR(50) NOT NULL,
+    entity_id INT,
+    old_values JSON,
+    new_values JSON,
+    ip_address VARCHAR(45),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- Insert sample departments
+INSERT INTO departments (department_name, budget_limit) VALUES
+('Finance', 100000.00),
+('Marketing', 75000.00),
+('Engineering', 120000.00),
+('Human Resources', 50000.00),
+('Sales', 80000.00);
+
+-- Insert sample users with bcrypt hashed passwords (password is 'password123' for all users)
+INSERT INTO users (first_name, last_name, email, password_hash, role, department_id, profile_image, phone_number) VALUES
+('John', 'Doe', 'john.doe@pesaflow.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'admin', 1, 'profile1.jpg', '+1234567890'),
+('Jane', 'Smith', 'jane.smith@pesaflow.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'manager', 2, 'profile2.jpg', '+1234567891'),
+('Michael', 'Johnson', 'michael.johnson@pesaflow.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'manager', 3, 'profile3.jpg', '+1234567892'),
+('Emily', 'Williams', 'emily.williams@pesaflow.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'manager', 4, 'profile4.jpg', '+1234567893'),
+('Robert', 'Brown', 'robert.brown@pesaflow.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'manager', 5, 'profile5.jpg', '+1234567894'),
+('Sarah', 'Davis', 'sarah.davis@pesaflow.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'employee', 1, 'profile6.jpg', '+1234567895'),
+('David', 'Miller', 'david.miller@pesaflow.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'employee', 2, 'profile7.jpg', '+1234567896'),
+('Jessica', 'Wilson', 'jessica.wilson@pesaflow.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'employee', 3, 'profile8.jpg', '+1234567897'),
+('Thomas', 'Moore', 'thomas.moore@pesaflow.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'employee', 4, 'profile9.jpg', '+1234567898'),
+('Jennifer', 'Taylor', 'jennifer.taylor@pesaflow.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'employee', 5, 'profile10.jpg', '+1234567899'),
+('Daniel', 'Anderson', 'daniel.anderson@pesaflow.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'finance', 1, 'profile11.jpg', '+1234567900');
+
+-- Update department managers
+UPDATE departments SET manager_id = 2 WHERE department_id = 2;
+UPDATE departments SET manager_id = 3 WHERE department_id = 3;
+UPDATE departments SET manager_id = 4 WHERE department_id = 4;
+UPDATE departments SET manager_id = 5 WHERE department_id = 5;
+UPDATE departments SET manager_id = 1 WHERE department_id = 1;
+
+-- Insert expense categories
+INSERT INTO categories (category_name, description) VALUES
+('Travel', 'Expenses related to business travel including airfare, hotels, and transportation'),
+('Meals', 'Business meals and entertainment expenses'),
+('Office Supplies', 'Stationery, printer cartridges, and other office essentials'),
+('Software', 'Software subscriptions and licenses'),
+('Hardware', 'Computer equipment, phones, and other hardware'),
+('Training', 'Professional development courses and certifications'),
+('Marketing', 'Advertising, promotions, and marketing materials'),
+('Utilities', 'Phone bills, internet, and other utility expenses'),
+('Rent', 'Office space rental and related expenses'),
+('Miscellaneous', 'Other business expenses that don\'t fit in other categories');
+
+-- Insert sample expenses
+INSERT INTO expenses (user_id, category_id, amount, description, expense_date, receipt_image, status, approved_by, approval_date) VALUES
+(6, 1, 1250.75, 'Flight to New York for client meeting', '2023-06-15', 'receipt1.jpg', 'approved', 1, '2023-06-16 14:30:00'),
+(6, 2, 85.50, 'Business lunch with potential client', '2023-06-16', 'receipt2.jpg', 'approved', 1, '2023-06-17 10:15:00'),
+(7, 3, 125.30, 'Quarterly office supplies purchase', '2023-06-10', 'receipt3.jpg', 'approved', 2, '2023-06-11 09:45:00'),
+(8, 4, 49.99, 'Monthly Adobe Creative Cloud subscription', '2023-06-05', 'receipt4.jpg', 'approved', 3, '2023-06-06 11:20:00'),
+(9, 6, 750.00, 'Project Management certification course', '2023-06-12', 'receipt5.jpg', 'approved', 4, '2023-06-13 15:10:00'),
+(10, 7, 500.00, 'Facebook ad campaign for product launch', '2023-06-08', 'receipt6.jpg', 'approved', 5, '2023-06-09 13:40:00'),
+(6, 1, 350.25, 'Hotel stay for conference', '2023-06-20', 'receipt7.jpg', 'pending', NULL, NULL),
+(7, 2, 65.75, 'Team lunch after project completion', '2023-06-22', 'receipt8.jpg', 'pending', NULL, NULL),
+(8, 5, 1200.00, 'New laptop for development work', '2023-06-18', 'receipt9.jpg', 'pending', NULL, NULL),
+(9, 8, 89.99, 'Monthly internet bill reimbursement', '2023-06-25', 'receipt10.jpg', 'rejected', 4, '2023-06-26 10:30:00'),
+(10, 10, 45.50, 'Office birthday celebration supplies', '2023-06-28', 'receipt11.jpg', 'pending', NULL, NULL);
+
+-- Insert monthly budgets for departments
+INSERT INTO budgets (department_id, fiscal_year, fiscal_month, amount) VALUES
+(1, 2023, 6, 8500.00),
+(1, 2023, 7, 8500.00),
+(2, 2023, 6, 6200.00),
+(2, 2023, 7, 6200.00),
+(3, 2023, 6, 10000.00),
+(3, 2023, 7, 10000.00),
+(4, 2023, 6, 4200.00),
+(4, 2023, 7, 4200.00),
+(5, 2023, 6, 6800.00),
+(5, 2023, 7, 6800.00);
+
+-- Insert dashboard widgets
+INSERT INTO dashboard_widgets (widget_name, widget_type, description, is_default) VALUES
+('Expense Summary', 'chart', 'Chart showing expense breakdown by category', TRUE),
+('Recent Expenses', 'list', 'List of most recent expenses submitted', TRUE),
+('Budget Overview', 'chart', 'Chart showing budget utilization', TRUE),
+('Pending Approvals', 'list', 'List of expenses pending approval', TRUE),
+('Monthly Spending Trend', 'chart', 'Line chart showing spending trends over time', TRUE),
+('Department Comparison', 'chart', 'Compare expenses across departments', FALSE),
+('Top Spenders', 'chart', 'Bar chart showing top spending employees', FALSE),
+('Expense Calendar', 'calendar', 'Calendar view of expenses by date', FALSE),
+('Quick Stats', 'statistic', 'Key metrics at a glance', TRUE),
+('Expense Map', 'chart', 'Geographical distribution of expenses', FALSE);
+
+-- Insert user dashboard settings
+INSERT INTO user_dashboard_settings (user_id, widget_id, position, widget_settings) VALUES
+(1, 1, 1, '{"timeRange": "month", "chartType": "pie"}'),
+(1, 2, 2, '{"limit": 5, "showStatus": true}'),
+(1, 3, 3, '{"timeRange": "year", "showDepartments": true}'),
+(1, 4, 4, '{"limit": 10, "sortBy": "date"}'),
+(1, 5, 5, '{"months": 6, "showTarget": true}'),
+(1, 9, 6, '{"metrics": ["total", "pending", "approved", "rejected"]}'),
+(2, 1, 1, '{"timeRange": "month", "chartType": "pie"}'),
+(2, 2, 2, '{"limit": 5, "showStatus": true}'),
+(2, 3, 3, '{"timeRange": "year", "showDepartments": false}'),
+(2, 4, 4, '{"limit": 5, "sortBy": "amount"}'),
+(3, 1, 1, '{"timeRange": "quarter", "chartType": "bar"}'),
+(3, 2, 2, '{"limit": 10, "showStatus": true}'),
+(3, 5, 3, '{"months": 12, "showTarget": true}'),
+(4, 1, 1, '{"timeRange": "month", "chartType": "doughnut"}'),
+(4, 4, 2, '{"limit": 15, "sortBy": "date"}'),
+(5, 1, 1, '{"timeRange": "month", "chartType": "pie"}'),
+(5, 7, 2, '{"limit": 5, "department": 5}');
+
+-- Insert sample notifications
+INSERT INTO notifications (user_id, message, related_entity, related_id) VALUES
+(1, 'New expense report submitted for approval', 'expense', 7),
+(1, 'New expense report submitted for approval', 'expense', 8),
+(1, 'New expense report submitted for approval', 'expense', 9),
+(2, 'Expense report approved', 'expense', 3),
+(3, 'Expense report approved', 'expense', 4),
+(4, 'Expense report rejected', 'expense', 10),
+(5, 'Expense report approved', 'expense', 6),
+(6, 'Your expense report has been approved', 'expense', 1),
+(6, 'Your expense report has been approved', 'expense', 2),
+(7, 'Your expense report has been approved', 'expense', 3),
+(8, 'Your expense report has been approved', 'expense', 4),
+(9, 'Your expense report has been rejected', 'expense', 10),
+(10, 'Your expense report has been approved', 'expense', 6);
+
+-- Insert sample reports
+INSERT INTO reports (report_name, report_type, user_id, parameters) VALUES
+('Monthly Expense Summary', 'expense', 1, '{"timeRange": "month", "groupBy": "category"}'),
+('Department Budget Analysis', 'budget', 1, '{"departments": [1,2,3,4,5], "fiscalYear": 2023}'),
+('Employee Spending Report', 'user', 1, '{"department": 3, "timeRange": "quarter"}'),
+('Marketing Department Expenses', 'department', 2, '{"department": 2, "timeRange": "year", "groupBy": "category"}'),
+('Engineering Team Expenses', 'department', 3, '{"department": 3, "timeRange": "quarter", "groupBy": "user"}');
+
+-- Insert sample audit logs
+INSERT INTO audit_log (user_id, action, entity_type, entity_id, old_values, new_values, ip_address) VALUES
+(1, 'create', 'user', 11, NULL, '{"first_name": "Daniel", "last_name": "Anderson", "email": "daniel.anderson@pesaflow.com", "role": "finance"}', '192.168.1.100'),
+(1, 'update', 'department', 1, '{"budget_limit": 90000.00}', '{"budget_limit": 100000.00}', '192.168.1.100'),
+(2, 'approve', 'expense', 3, '{"status": "pending"}', '{"status": "approved", "approved_by": 2, "approval_date": "2023-06-11 09:45:00"}', '192.168.1.101'),
+(3, 'approve', 'expense', 4, '{"status": "pending"}', '{"status": "approved", "approved_by": 3, "approval_date": "2023-06-06 11:20:00"}', '192.168.1.102'),
+(4, 'reject', 'expense', 10, '{"status": "pending"}', '{"status": "rejected", "approved_by": 4, "approval_date": "2023-06-26 10:30:00", "rejection_reason": "Personal expense, not eligible for reimbursement"}', '192.168.1.103'),
+(6, 'create', 'expense', 1, NULL, '{"amount": 1250.75, "category_id": 1, "description": "Flight to New York for client meeting"}', '192.168.1.105');

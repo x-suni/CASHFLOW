@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - PesaFlow Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Same CSS as template -->
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Same sidebar as template -->
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Same topbar as template -->
+            <header class="topbar">
+                <button class="toggle-sidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search expenses, reports, etc.">
+                </div>
+                
+                <div class="user-menu">
+                    <div class="notification-icon">
+                        <i class="far fa-bell"></i>
+                        <span class="notification-count">3</span>
+                    </div>
+                    
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <img src="https://via.placeholder.com/35" alt="User Avatar">
+                        </div>
+                        <span class="user-name">John Doe</span>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Page Content -->
+            <main class="page-content">
+                <div class="page-title">
+                    <h1>My Profile</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="dashboard.html">Home</a></li>
+                        <li>Profile</li>
+                    </ul>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 300px 1fr; gap: 20px;">
+                    <!-- Profile Sidebar -->
+                    <div style="background-color: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); text-align: center;">
+                        <div style="width: 150px; height: 150px; border-radius: 50%; background-color: #eee; margin: 0 auto 20px; overflow: hidden; position: relative;">
+                            <img src="https://via.placeholder.com/150" alt="User Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,0.5); padding: 5px; cursor: pointer;">
+                                <i class="fas fa-camera" style="color: white;"></i>
+                            </div>
+                        </div>
+                        
+                        <h2 style="margin-bottom: 5px;">John Doe</h2>
+                        <p style="color: #777; margin-bottom: 15px;">Finance Manager</p>
+                        
+                        <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px;">
+                            <a href="mailto:john.doe@example.com" style="color: var(--primary); font-size: 1.1rem; width: 35px; height: 35px; border-radius: 50%; background-color: #f0f7ff; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            <a href="tel:+1234567890" style="color: var(--primary); font-size: 1.1rem; width: 35px; height: 35px; border-radius: 50%; background-color: #f0f7ff; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-phone"></i>
+                            </a>
+                            <a href="#" style="color: var(--primary); font-size: 1.1rem; width: 35px; height: 35px; border-radius: 50%; background-color: #f0f7ff; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-comment"></i>
+                            </a>
+                        </div>
+                        
+                        <div style="text-align: left; border-top: 1px solid #eee; padding-top: 20px;">
+                            <div style="margin-bottom: 10px;">
+                                <span style="font-weight: 500; display: block; margin-bottom: 3px;">Department</span>
+                                <span>Finance</span>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <span style="font-weight: 500; display: block; margin-bottom: 3px;">Position</span>
+                                <span>Finance Manager</span>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <span style="font-weight: 500; display: block; margin-bottom: 3px;">Email</span>
+                                <span>john.doe@example.com</span>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <span style="font-weight: 500; display: block; margin-bottom: 3px;">Phone</span>
+                                <span>+1 (234) 567-890</span>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <span style="font-weight: 500; display: block; margin-bottom: 3px;">Joined</span>
+                                <span>January 15, 2020</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Profile Content -->
+                    <div>
+                        <!-- Profile Tabs -->
+                        <div style="background-color: white; border-radius: 8px; padding: 0; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); margin-bottom: 20px;">
+                            <div style="display: flex; border-bottom: 1px solid #eee;">
+                                <button style="flex: 1; padding: 15px; background: none; border: none; border-bottom: 2px solid var(--primary); font-weight: 500; color: var(--primary); cursor: pointer;">Personal Information</button>
+                                <button style="flex: 1; padding: 15px; background: none; border: none; font-weight: 500; color: #555; cursor: pointer;">Change Password</button>
+                                <button style="flex: 1; padding: 15px; background: none; border: none; font-weight: 500; color: #555; cursor: pointer;">Notification Settings</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Personal Information Form -->
+                        <div class="content-card">
+                            <h2>Personal Information</h2>
+                            <p>Update your personal details and contact information.</p>
+                            
+                            <form style="margin-top: 20px;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                                    <div>
+                                        <label style="display: block; margin-bottom: 5px; font-weight: 500;">First Name</label>
+                                        <input type="text" value="John" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                    </div>
+                                    
+                                    <div>
+                                        <label style="display: block; margin-bottom: 5px; font-weight: 500;">Last Name</label>
+                                        <input type="text" value="Doe" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Email Address</label>
+                                    <input type="email" value="john.doe@example.com" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                </div>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Phone Number</label>
+                                    <input type="tel" value="+1 (234) 567-890" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                </div>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Department</label>
+                                    <select style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                        <option selected>Finance</option>
+                                        <option>Marketing</option>
+                                        <option>IT</option>
+                                        <option>Human Resources</option>
+                                        <option>Sales</option>
+                                    </select>
+                                </div>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Position</label>
+                                    <input type="text" value="Finance Manager" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                </div>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Bio</label>
+                                    <textarea style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 100px;">Finance professional with over 10 years of experience in expense management and financial reporting.</textarea>
+                                </div>
+                                
+                                <button type="submit" style="background-color: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Save Changes</button>
+                            </form>
+                        </div>
+                        
+                        <!-- Recent Activity -->
+                        <div class="content-card">
+                            <h2>Recent Activity</h2>
+                            <p>Your recent actions and notifications.</p>
+                            
+                            <ul style="list-style: none; margin-top: 20px;">
+                                <li style="display: flex; align-items: flex-start; padding: 15px 0; border-bottom: 1px solid #eee;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background-color: rgba(26, 115, 232, 0.1); display: flex; align-items: center; justify-content: center; margin-right: 15px; color: var(--primary);">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div>
+                                        <p style="margin-bottom: 5px;">You approved an expense request from <strong>Sarah Johnson</strong></p>
+                                        <span style="font-size: 0.8rem; color: #777;">Today, 10:45 AM</span>
+                                    </div>
+                                </li>
+                                
+                                <li style="display: flex; align-items: flex-start; padding: 15px 0; border-bottom: 1px solid #eee;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background-color: rgba(76, 175, 80, 0.1); display: flex; align-items: center; justify-content: center; margin-right: 15px; color: var(--secondary);">
+                                        <i class="fas fa-file-invoice-dollar"></i>
+                                    </div>
+                                    <div>
+                                        <p style="margin-bottom: 5px;">Your expense report <strong>Business Trip to New York</strong> was approved</p>
+                                        <span style="font-size: 0.8rem; color: #777;">Yesterday, 3:20 PM</span>
+                                    </div>
+                                </li>
+                                
+                                <li style="display: flex; align-items: flex-start; padding: 15px 0; border-bottom: 1px solid #eee;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background-color: rgba(255, 152, 0, 0.1); display: flex; align-items: center; justify-content: center; margin-right: 15px; color: var(--warning);">
+                                        <i class="fas fa-user-edit"></i>
+                                    </div>
+                                    <div>
+                                        <p style="margin-bottom: 5px;">You updated your profile information</p>
+                                        <span style="font-size: 0.8rem; color: #777;">Jul 18, 2023</span>
+                                    </div>
+                                </li>
+                                
+                                <li style="display: flex; align-items: flex-start; padding: 15px 0;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background-color: rgba(244, 67, 54, 0.1); display: flex; align-items: center; justify-content: center; margin-right: 15px; color: var(--danger);">
+                                        <i class="fas fa-times-circle"></i>
+                                    </div>
+                                    <div>
+                                        <p style="margin-bottom: 5px;">You rejected an expense request from <strong>Robert Wilson</strong></p>
+                                        <span style="font-size: 0.8rem; color: #777;">Jul 15, 2023</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sidebar on mobile
+        document.querySelector('.toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('active');
+            document.querySelector('.main-content').classList.toggle('sidebar-active');
+        });
+        
+        // Set active menu item
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop();
+            const menuItems = document.querySelectorAll('.menu-item');
+            
+            menuItems.forEach(item => {
+                if (item.getAttribute('href') === currentPage) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Profile tabs
+            const tabButtons = document.querySelectorAll('.content-card + div button');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    tabButtons.forEach(btn => {
+                        btn.style.borderBottom = 'none';
+                        btn.style.color = '#555';
+                    });
+                    this.style.borderBottom = '2px solid var(--primary)';
+                    this.style.color = 'var(--primary)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
